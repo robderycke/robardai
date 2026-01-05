@@ -1,0 +1,331 @@
+// ==========================================
+// 1. SETTINGS: Variabelen (Kleuren, Fonts)
+// ==========================================
+$clr-bg:        #050505;
+$clr-surface:   #121212;
+$clr-primary:   #0077ff; // Modern Electric Blue
+$clr-accent:    #00f2ff; // Cyan highlight
+$clr-white:     #ffffff;
+$clr-gray:      #8c8c8c;
+$clr-border:    rgba(255, 255, 255, 0.1);
+
+$font-main:     'Roboto', sans-serif;
+$font-heading:  'Montserrat', sans-serif;
+
+$transition:    all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+// ==========================================
+// 2. TOOLS: Mixins & Functies
+// ==========================================
+@mixin glassmorphism {
+    background: rgba($clr-bg, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid $clr-border;
+}
+
+@mixin desktop {
+    @media (min-width: 992px) { @content; }
+}
+
+// ==========================================
+// 3. GENERIC: Reset & Basis Box-sizing
+// ==========================================
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+// ==========================================
+// 4. ELEMENTS: Bare HTML Tags
+// ==========================================
+body {
+    background-color: $clr-bg;
+    color: $clr-white;
+    font-family: $font-main;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 {
+    font-family: $font-heading;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+a {
+    transition: $transition;
+    text-decoration: none;
+}
+
+// ==========================================
+// 5. COMPONENTS: De BEM-bouwblokken
+// ==========================================
+
+// --- Navbar ---
+.c-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1.5rem 0;
+    z-index: 1000;
+    transition: $transition;
+
+    &.c-header--scrolled {
+        @include glassmorphism;
+        padding: 0.8rem 0;
+    }
+}
+
+.c-logo {
+    font-family: $font-heading;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: $clr-white;
+    
+    span { color: $clr-primary; }
+}
+
+.c-nav-link {
+    color: $clr-white;
+    font-family: $font-heading;
+    font-weight: 700;
+    font-size: 0.85rem;
+    opacity: 0.7;
+
+    &:hover {
+        opacity: 1;
+        color: $clr-primary;
+    }
+}
+
+// --- Hero ---
+.c-hero {
+    min-height: 100vh;
+    padding-top: 80px;
+    background: radial-gradient(circle at 90% 10%, rgba($clr-primary, 0.15), transparent 40%);
+
+    &__title {
+        font-size: clamp(2.5rem, 8vw, 5.5rem);
+        line-height: 0.95;
+        letter-spacing: -2px;
+        margin-bottom: 2rem;
+    }
+
+    &__lead {
+        font-size: 1.25rem;
+        color: $clr-gray;
+        max-width: 600px;
+        margin-bottom: 3rem;
+        font-weight: 300;
+    }
+}
+
+// --- Buttons ---
+.c-btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-family: $font-heading;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    border-radius: 0; // Strak design
+    cursor: pointer;
+
+    &--primary {
+        background-color: $clr-primary;
+        color: $clr-white;
+        border: 2px solid $clr-primary;
+
+        &:hover {
+            background-color: transparent;
+            color: $clr-primary;
+            transform: translateY(-5px);
+        }
+    }
+
+    &--outline {
+        border: 2px solid $clr-border;
+        color: $clr-white;
+
+        &:hover {
+            border-color: $clr-primary;
+            color: $clr-primary;
+        }
+    }
+
+    &--small {
+        padding: 0.6rem 1.5rem;
+    }
+}
+
+// --- Cards ---
+.c-card {
+    background-color: $clr-surface;
+    border: 1px solid $clr-border;
+    padding: 3rem 2rem;
+    height: 100%;
+    transition: $transition;
+
+    &:hover {
+        border-color: $clr-primary;
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+
+        .c-card__icon { color: $clr-accent; transform: scale(1.1); }
+    }
+
+    &__icon {
+        font-size: 2.5rem;
+        color: $clr-primary;
+        margin-bottom: 1.5rem;
+        transition: $transition;
+    }
+
+    &__title {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    &__text {
+        color: $clr-gray;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+}
+
+// --- Forms ---
+.c-form-wrapper {
+    background-color: $clr-surface;
+    padding: 3rem;
+    border: 1px solid $clr-border;
+
+    .form-control {
+        background-color: $clr-bg;
+        border: 1px solid $clr-border;
+        color: $clr-white;
+        border-radius: 0;
+        padding: 0.8rem;
+
+        &:focus {
+            border-color: $clr-primary;
+            box-shadow: none;
+            background-color: $clr-bg;
+            color: $clr-white;
+        }
+    }
+
+    .form-label {
+        font-family: $font-heading;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: $clr-gray;
+    }
+}
+
+// ==========================================
+// 6. UTILITIES: Helper klassen
+// ==========================================
+.u-text-gradient {
+    background: linear-gradient(90deg, $clr-primary, $clr-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.u-text-accent { color: $clr-primary; }
+.u-ls-4 { letter-spacing: 4px; }
+.u-py-100 { padding: 100px 0; }
+.u-py-50 { padding: 50px 0; }
+
+.u-section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    span { @extend .u-text-gradient; }
+}
+
+.c-card-price {
+    background-color: $clr-surface;
+    border: 1px solid $clr-border;
+    padding: 3rem 2rem;
+    position: relative;
+    transition: $transition;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &:hover {
+        border-color: rgba($clr-primary, 0.5);
+        transform: translateY(-5px);
+    }
+
+    &__header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    &__title {
+        font-size: 1.25rem;
+        color: $clr-gray;
+        margin-bottom: 0.5rem;
+    }
+
+    &__amount {
+        font-size: 3rem;
+        font-weight: 900;
+        font-family: $font-heading;
+        color: $clr-white;
+    }
+
+    &__features {
+        margin-bottom: 2.5rem;
+        flex-grow: 1;
+
+        li {
+            padding: 0.6rem 0;
+            color: $clr-gray;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+            i {
+                color: $clr-primary;
+                margin-right: 10px;
+            }
+        }
+    }
+
+    // Modifier voor de opvallende kaart
+    &--highlighted {
+        border-color: $clr-primary;
+        background: linear-gradient(180deg, rgba($clr-primary, 0.08) 0%, transparent 100%);
+        transform: scale(1.05);
+        z-index: 2;
+
+        &:hover {
+            transform: scale(1.07) translateY(-5px);
+            border-color: $clr-accent;
+        }
+
+        .c-card-price__amount {
+            @extend .u-text-gradient;
+        }
+    }
+
+    &__badge {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $clr-primary;
+        color: $clr-white;
+        padding: 0.4rem 1.2rem;
+        font-size: 0.7rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+}
